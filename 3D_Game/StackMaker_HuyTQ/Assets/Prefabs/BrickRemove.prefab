@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2640573762112757531}
   - component: {fileID: 1662885611579996260}
   m_Layer: 0
-  m_Name: BrickRemove
+  m_Name: brickremove
   m_TagString: brickremove
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4957739676876243917}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.74813175, y: 0.65872765, z: 0.2293179}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.742, y: 0.3224, z: 0.2293179}
+  m_LocalScale: {x: 0.95, y: 0.2, z: 0.95}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 039c42a94f6da04478fefa55e2a23ec3, type: 2}
+  - {fileID: 2100000, guid: c7f8398b402ac384e9b10cd813438060, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

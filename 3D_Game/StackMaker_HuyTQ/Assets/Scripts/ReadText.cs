@@ -15,6 +15,7 @@ public class ReadText : MonoBehaviour
     public GameObject brickstop;
 
     public static float startPointX, startPointY , startPointZ;
+    public static float endPointX, endPointY, endPointZ;
 
     private void Awake()
     {
@@ -58,12 +59,13 @@ public class ReadText : MonoBehaviour
                 {
                     Instantiate(brickstart, new Vector3(j, 0, i), Quaternion.identity);
                     startPointX = j;
-                 
                     startPointZ = i;
                 }
                 else if (MapData[i, j] == 4)
                 {
                     Instantiate(brickstop, new Vector3(j, 0, i), Quaternion.identity);
+                    endPointX = j;
+                    endPointZ = i;
                 }
                 else
                 {

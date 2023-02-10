@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9063142397235578756}
   - component: {fileID: 6774906486796292091}
   m_Layer: 0
-  m_Name: Brickmove
+  m_Name: brickmove
   m_TagString: brickmove
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9063142397235578762}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.0291, y: 0.1886, z: -0.0274}
+  m_LocalScale: {x: 0.95, y: 0.2, z: 0.95}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4ee0c5503a055be4db5e3fee7cc98e97, type: 2}
+  - {fileID: 2100000, guid: 0bdc64f6bcbdb5e4e94582f5566d3fb8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,8 +96,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6839812, y: 1, z: 0.7439431}
-  m_Center: {x: -0.039028525, y: 0, z: 0.02176769}
+  m_Size: {x: 0.46180508, y: 1, z: 0.16474843}
+  m_Center: {x: -0.035315033, y: 0, z: 0.05344608}
 --- !u!54 &6774906486796292091
 Rigidbody:
   m_ObjectHideFlags: 0
