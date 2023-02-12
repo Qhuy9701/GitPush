@@ -350,8 +350,11 @@
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEngine.UI.ref.dll"
 "Assets/Assets/Ouroboros/Stylized Textures - Mini Set/Demo/Sources/Rotator.cs"
-"Assets/Scripts/PlayerMove.cs"
-"Assets/Scripts/ReadText.cs"
+"Assets/Prefabs/GameMenuController.cs"
+"Assets/Scripts/Physic/CameraFollow.cs"
+"Assets/Scripts/Physic/PlayerMove.cs"
+"Assets/Scripts/Physic/RayCastPlayer.cs"
+"Assets/Scripts/Physic/ReadText.cs"
 -langversion:9.0
 
 /deterministic
