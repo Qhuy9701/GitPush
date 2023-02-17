@@ -1,29 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-[RequireComponent(typeof(Rigidbody), typeof (BoxCollider))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Rigidbody _rigidbody;
-    [SerializeField] private FixedJoystick _joystick;
-    // [SerializeField] private Animator _animator;
+    private Rigidbody rb;
+    [SerializeField] private float speed = 6;
+    [SerializeField] private FixedJoystick joyStick;
+    [SerializeField] private int numberbrick;
+    [SerializeField] private Brick brickPrefab;
 
-    [SerializeField] private float _moveSpeed;
 
-    private void FixedUpdate()
+    private void Awake()
     {
-        _rigidbody.velocity = new Vector3(_joystick.Horizontal * _moveSpeed, _rigidbody.velocity.y, _joystick.Vertical * _moveSpeed);
+        rb = GetComponent<Rigidbody>();
+    }
 
-        if (_joystick.Horizontal != 0 || _joystick.Vertical != 0)
+    private void Update()
+    {
+        Vector2 input = new Vector2(joyStick.Horizontal, joyStick.Vertical);
+
+        Vector3 dirMovement = new Vector3(input.x, 0f, input.y);
+        Vector3 moveDestination = transform.position + (dirMovement * speed * Time.deltaTime);
+        transform.position = moveDestination;
+        if (input.sqrMagnitude > 0.1f)
         {
-            transform.rotation = Quaternion.LookRotation(_rigidbody.velocity);
-            // _animator.SetBool("isRunning", true);
+            transform.rotation = Quaternion.LookRotation(new Vector3(input.x, 0, input.y));
         }
-        else
-            // _animator.SetBool("isRunning", false);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag.Equals("Wall"))
         {
-                Debug.Log("No movement");  
+            other.transform.SetParent(transform);
+            other.transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
+            numberbrick++;
+            Debug.Log(numberbrick);
+            foreach (Transform child in transform)
+            {
+                child.position = new Vector3(transform.position.x + 0.5f, child.position.y + 0.250f, transform.position.z);
+                child.rotation = new Quaternion(0, 0, 0, 0);
+            }
         }
     }
 }

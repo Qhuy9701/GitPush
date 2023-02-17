@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 09b729832733cd34ea95874dfbf4fc8a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - RedBrickPrefab: {fileID: 8449383143818931965, guid: 1851191ba6285f647ad1bff2414d1f26, type: 3}
+  - BlueBrickPrefab: {fileID: 8449383143818931965, guid: 4facc4f46805b9b4c870d63bcece7389, type: 3}
+  - YellowBrickPrefab: {fileID: 8449383143818931965, guid: 5d736042ecf37314092c8d27b81d8be5, type: 3}
+  - BlackBrickPrefab: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
