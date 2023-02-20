@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 6;
     [SerializeField] private FixedJoystick joyStick;
     [SerializeField] private int numberbrick;
-    [SerializeField] private Brick brickPrefab;
+    [SerializeField] private Transform backPos;
+    private float yPos = 0.2f;
 
 
     private void Awake()
@@ -21,7 +22,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 input = new Vector2(joyStick.Horizontal, joyStick.Vertical);
 
-        Vector3 dirMovement = new Vector3(input.x, 0f, input.y);
+        Vector3 dirMovement = new Vector3(-input.x, 0f, -input.y);
         Vector3 moveDestination = transform.position + (dirMovement * speed * Time.deltaTime);
         transform.position = moveDestination;
         if (input.sqrMagnitude > 0.1f)
@@ -32,17 +33,40 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Equals("Wall"))
+        if (other.gameObject.CompareTag("Obstacle"))
         {
-            other.transform.SetParent(transform);
-            other.transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
-            numberbrick++;
-            Debug.Log(numberbrick);
-            foreach (Transform child in transform)
-            {
-                child.position = new Vector3(transform.position.x + 0.5f, child.position.y + 0.250f, transform.position.z);
-                child.rotation = new Quaternion(0, 0, 0, 0);
-            }
+            AddBack(other.gameObject);
         }
+        if (other.gameObject.CompareTag("Bridge"))
+        {
+            Bridge(other.gameObject);
+        }
+    }
+
+    private void Bridge(GameObject bridgeObj)
+    {
+        if (backPos.transform.childCount > 0)
+        { 
+            MeshRenderer mesh = bridgeObj.GetComponent<MeshRenderer>();
+            mesh.enabled = true;
+            mesh.material.color = Color.red;
+            int obstacleNumber = backPos.transform.childCount - 1;
+            Destroy(backPos.GetChild(obstacleNumber).gameObject);
+    
+            yPos -= 0.2f;
+            bridgeObj.GetComponent<BoxCollider>().enabled = false;
+        }
+  
+    }
+    private void AddBack(GameObject obj)
+    {
+       
+        obj.transform.SetParent(backPos.transform);
+      
+        obj.transform.rotation = backPos.rotation;
+       
+        obj.transform.position = new Vector3(backPos.position.x,yPos,backPos.position.z);
+      
+        yPos += 0.2f;
     }
 }

@@ -4,35 +4,40 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    public Brick brickPrefab;
-    public List<Brick> brickList = new List<Brick>();
+    [SerializeField] private GameObject[] objectsToPool;
+    [SerializeField] private int amountToPool;
+    private List<GameObject>[] pooledObjects;
 
-    public void InitializePool(int numBricks)
+    private void Start()
     {
-        for (int i = 0; i < numBricks; i++)
+        pooledObjects = new List<GameObject>[objectsToPool.Length];
+
+        for (int i = 0; i < objectsToPool.Length; i++)
         {
-            Brick brick = Instantiate(brickPrefab);
-            brick.gameObject.SetActive(false);
-            brickList.Add(brick);
-            brick.transform.parent = transform;
+            pooledObjects[i] = new List<GameObject>();
+
+            for (int j = 0; j < amountToPool; j++)
+            {
+                GameObject obj = Instantiate(objectsToPool[i]);
+                obj.SetActive(false);
+                pooledObjects[i].Add(obj);
+            }
         }
     }
 
-    public Brick GetObjectFromPool()
+    public GameObject GetPooledObject(int index)
     {
-        foreach (Brick brick in brickList)
+        for (int i = 0; i < pooledObjects[index].Count; i++)
         {
-            if (!brick.gameObject.activeInHierarchy)
+            if (!pooledObjects[index][i].activeInHierarchy)
             {
-                brick.gameObject.SetActive(true);
-                return brick;
+                return pooledObjects[index][i];
             }
         }
 
-        Brick newBrick = Instantiate(brickPrefab);
-        newBrick.gameObject.SetActive(true);
-        brickList.Add(newBrick);
-        newBrick.transform.parent = transform;
-        return newBrick;
+        GameObject obj = Instantiate(objectsToPool[index]);
+        obj.SetActive(false);
+        pooledObjects[index].Add(obj);
+        return obj;
     }
 }
