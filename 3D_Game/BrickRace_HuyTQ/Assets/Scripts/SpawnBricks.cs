@@ -2,71 +2,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spawn : MonoBehaviour
+public class SpawnBricks : MonoBehaviour
 {
-    [Range(1, 10)]
-    public int width, height;
-    Vector3 origin;
-    int randomValue;
-    public GameObject[] cubes;
-    private List<Vector3> eatenPositions = new List<Vector3>();
+    public GameObject[] brickPrefabs; // Mảng chứa các Prefab brick có màu khác nhau
+    public int numRows; // Số hàng
+    public int numCols; // Số cột
+    public float xOffset; // Khoảng cách giữa các cột
+    public float zOffset; // Khoảng cách giữa các hàng
 
     void Start()
     {
-        SpawnCubes();
-    }
+        // Tính toán số lượng brick cần spawn cho mỗi loại
+        int numBricksPerType = numRows * numCols / brickPrefabs.Length;
 
-    void SpawnCubes()
-    {
-        for (int i = -5; i < width; i++)
+        // Khởi tạo biến đếm số lượng brick đã spawn cho mỗi loại là 0
+        Dictionary<GameObject, int> brickCount = new Dictionary<GameObject, int>();
+        foreach (GameObject brickPrefab in brickPrefabs)
         {
-            for (int j = -4; j < height; j++)
+            brickCount[brickPrefab] = 0;
+        }
+
+        // Spawn bricks
+        Vector3 spawnPos = transform.position;
+        int numBricksSpawned = 0;
+        int numBricksToSpawn = numBricksPerType * brickPrefabs.Length;
+        while (numBricksSpawned < numBricksToSpawn)
+        {
+            // Lấy ngẫu nhiên prefab brick từ mảng
+            GameObject brickPrefab = brickPrefabs[Random.Range(0, brickPrefabs.Length)];
+
+            // Kiểm tra số lượng brick đã spawn của loại này, nếu đã đủ thì chuyển sang loại khác
+            if (brickCount[brickPrefab] >= numBricksPerType)
             {
-                randomValue = Random.Range(0, 3);
-                origin = new Vector3(transform.position.x + i, transform.position.y, transform.position.z + j);
-                GameObject obj = Instantiate(cubes[randomValue], origin, transform.rotation, transform);
+                continue;
             }
-        }
-    }
 
-    void SpawnNewCube(Vector3 position)
-    {
-        // Lấy tất cả các vị trí còn trống
-        List<Vector3> availablePositions = new List<Vector3>();
-        for (int i = -5; i < width; i++)
-        {
-            for (int j = -4; j < height; j++)
+            // Spawn brick
+            GameObject brick = Instantiate(brickPrefab, spawnPos, Quaternion.identity);
+
+            // Đếm số lượng brick đã spawn cho loại này và tăng biến đếm tổng số lượng brick đã spawn lên 1
+            brickCount[brickPrefab]++;
+            numBricksSpawned++;
+
+            // Di chuyển spawnPos đến vị trí của cột tiếp theo
+            spawnPos.x += xOffset;
+
+            // Nếu đã spawn đủ số lượng brick cho một hàng, chuyển xuống hàng tiếp theo và reset vị trí cột
+            if (numBricksSpawned % numCols == 0)
             {
-                Vector3 pos = new Vector3(transform.position.x + i, transform.position.y, transform.position.z + j);
-                if (!eatenPositions.Contains(pos))
-                {
-                    availablePositions.Add(pos);
-                }
-            }
-        }
-
-        // Nếu có vị trí còn trống thì tạo viên gạch mới
-        if (availablePositions.Count > 0)
-        {
-            int randomIndex = Random.Range(0, availablePositions.Count);
-            GameObject obj = Instantiate(cubes[randomValue], availablePositions[randomIndex], transform.rotation, transform);
-        }
-    }
-
-    void AddEatenPosition(Vector3 position)
-    {
-        eatenPositions.Add(position);
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Cube"))
-        {
-            if (!eatenPositions.Contains(other.transform.position))
-            {
-                AddEatenPosition(other.transform.position);
-                Destroy(other.gameObject, 5f);
-                Invoke("SpawnNewCube", 5f);
+                spawnPos.x = transform.position.x;
+                spawnPos.z += zOffset;
             }
         }
     }

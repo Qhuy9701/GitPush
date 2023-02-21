@@ -7,6 +7,8 @@ TagManager:
   - Obstacle
   - Bridge
   - Wall
+  - BridgeCheck
+  - Obstacle2
   layers:
   - Default
   - TransparentFX
